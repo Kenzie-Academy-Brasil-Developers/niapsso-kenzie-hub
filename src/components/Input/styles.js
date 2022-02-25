@@ -40,7 +40,7 @@ export const Content = styled.div`
       }
     `}
   input {
-    background-color: transparent;
+    background-color: var(--grey-2);
     align-items: center;
     flex: 1;
     border: 0;
@@ -48,5 +48,16 @@ export const Content = styled.div`
     &::placeholder {
       color: var(--grey-50);
     }
+  }
+  input:-internal-autofill-selected {
+    appearance: 0;
+    background-image: none !important;
+    background-color: var(--grey-2) !important;
+    color: var(--grey-0) !important;
+  }
+  button {
+    border: none;
+    color: var(--grey-1);
+    background-color: transparent;
   }
 `;

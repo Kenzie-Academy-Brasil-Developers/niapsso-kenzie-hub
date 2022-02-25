@@ -14,6 +14,9 @@ export default createGlobalStyle`
     font-family: 'Inter', sans-serif;    
     color: var(--grey-0);
   }
+  button {
+    cursor: pointer;
+  }
   :root {
     --color-primary: #FF577F;
     --color-primary-focus: #FF427F;
@@ -27,7 +30,7 @@ export default createGlobalStyle`
     --success: #3FE864;
     --negative: #E83F5B;
     --title-1: 1rem;
-    --title-2: calc(var(--title-1) - 0.25);
-    --title-3: calc(var(--title-2) - 0.25);
+    --title-2: 0.75rem;
+    --title-3: 0.5rem;
   }
 `;

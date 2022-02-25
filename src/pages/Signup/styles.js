@@ -26,9 +26,6 @@ export const Container = styled.div`
     font-size: var(--title-2);
     color: var(--grey-1);
   }
-  > button {
-    width: 100%;
-  }
 `;
 
 export const Form = styled.form`

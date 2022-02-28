@@ -9,11 +9,26 @@ export const Wrapper = styled.div`
   img {
     width: 100px;
   }
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    button {
+      background-color: var(--grey-3);
+      border: none;
+      border-radius: 4px;
+      padding: 10px 24px;
+      transition: 0.5s;
+    }
+    button:hover {
+      background-color: var(--grey-1);
+    }
+  }
 `;
 
-export const Container = styled.div`
+export const Container = styled.section`
   padding: 30px 18px;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,5 +1,7 @@
+import { Wrapper } from "./styles";
+
 const Home = () => {
-  return <div>Home</div>;
+  return <Wrapper></Wrapper>;
 };
 
 export default Home;

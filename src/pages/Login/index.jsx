@@ -8,8 +8,10 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { kenzieHubApi } from "../../services/api";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ auth, setAuth }) => {
   const [show, setShow] = useState(false);
   const history = useHistory();
   const schema = yup.object().shape({
@@ -21,10 +23,22 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const handleLogin = (data) => {
-    console.log(data);
+  const handleLogin = async (data) => {
+    const response = await kenzieHubApi.post("/sessions", data).catch(() => {
+      toast.error("Erro na autenticação, cheque suas credenciais");
+    });
+    const {
+      token,
+      user: { name, course_module, techs },
+    } = response.data;
+    localStorage.setItem(
+      "@KenzieHub:token",
+      JSON.stringify({ token, name, course_module, techs })
+    );
+    toast.success("Login feito com sucesso!");
+    setAuth(true);
+    history.push("/");
   };
-  console.log(errors);
   return (
     <Wrapper>
       <img alt="Kenzie Hub Logo" src={Logo} />

@@ -1,7 +1,6 @@
 import { Wrapper, Container, Form } from "./styles";
 import Logo from "./../../assets/Logo.png";
 import Input from "../../components/Input";
-
 import Button from "../../components/Button";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -9,7 +8,8 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import SelectInput from "../../components/SelectInput";
+import SelectInput from "./../../components/SelectInput";
+import { kenzieHubApi } from "./../../services/api";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
@@ -54,16 +54,19 @@ const Signup = () => {
     formState: { errors },
     control,
   } = useForm({ resolver: yupResolver(schema) });
-  const handleSignup = (data) => {
-    console.log(data);
-    console.log("peidas");
+  const handleSignup = async (data) => {
+    delete data.confirm_password;
+    await kenzieHubApi
+      .post("/users", data)
+      .then(() => history.push("/login"))
+      .catch((error) => console.log(error));
   };
-  console.log(errors);
-  console.log(control);
   return (
     <Wrapper>
-      <img alt="Kenzie Hub Login" src={Logo} />
-      <button>Voltar</button>
+      <div>
+        <img alt="Kenzie Hub Login" src={Logo} />
+        <button onClick={() => history.push("/login")}>Voltar</button>
+      </div>
       <Container>
         <h3>Crie sua conta</h3>
         <h4>Rápido e grátis, vamos nessa</h4>
@@ -105,15 +108,18 @@ const Signup = () => {
             register={register}
           />
           <Controller
-            name="course_module"
             control={control}
-            render={({ field }) => <SelectInput {...field} values={options} />}
-          />
-          {/* <SelectInput
-            values={options}
+            defaultValue={options[0].value}
             name="course_module"
-            {...register("course_module")}
-          /> */}
+            render={({ field: { onChange, value, ref } }) => (
+              <SelectInput
+                inputRef={ref}
+                options={options}
+                value={options.find((c) => c.value === value)}
+                onChange={(val) => onChange(val.value)}
+              />
+            )}
+          />
           <Input
             label="Contato"
             placeholder="linkedin/in/exemplo"

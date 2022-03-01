@@ -10,8 +10,10 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SelectInput from "./../../components/SelectInput";
 import { kenzieHubApi } from "./../../services/api";
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
-const Signup = () => {
+const Signup = ({ auth }) => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const options = [
@@ -58,9 +60,15 @@ const Signup = () => {
     delete data.confirm_password;
     await kenzieHubApi
       .post("/users", data)
-      .then(() => history.push("/login"))
-      .catch((error) => console.log(error));
+      .then(() => {
+        toast.success("Conta criada com sucesso!");
+        history.push("/login");
+      })
+      .catch(() => toast.error("Ops! Algo deu errado"));
   };
+  if (auth) {
+    return <Redirect to="/" />;
+  }
   return (
     <Wrapper>
       <div>

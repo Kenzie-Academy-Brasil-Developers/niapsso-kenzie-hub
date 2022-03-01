@@ -4,7 +4,7 @@ import Input from "./../../components/Input";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import Button from "../../components/Button";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,6 +39,9 @@ const Login = ({ auth, setAuth }) => {
     setAuth(true);
     history.push("/");
   };
+  if (auth) {
+    return <Redirect to="/" />;
+  }
   return (
     <Wrapper>
       <img alt="Kenzie Hub Logo" src={Logo} />

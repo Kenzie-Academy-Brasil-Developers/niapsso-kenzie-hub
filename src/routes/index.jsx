@@ -12,6 +12,7 @@ const Routes = () => {
       return setAuth(true);
     }
   }, []);
+  console.log(auth);
   return (
     <Switch>
       <Route exact path="/">
@@ -21,7 +22,7 @@ const Routes = () => {
         <Login auth={auth} setAuth={setAuth} />
       </Route>
       <Route path="/signup">
-        <Signup />
+        <Signup auth={auth} />
       </Route>
     </Switch>
   );

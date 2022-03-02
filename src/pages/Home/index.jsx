@@ -118,14 +118,13 @@ const Home = ({ auth, setAuth }) => {
               error={errors.text?.message}
               register={register}
             />
-            <span>Selecionar status</span>
             <Controller
               control={control}
-              defaultValue={options[0].value}
-              name="status"
-              render={({ field: { onChange, value, ref } }) => (
+              render={({ field: { onChange, value } }) => (
                 <SelectInput
-                  inputRef={ref}
+                  name="status"
+                  label="Selecionar status"
+                  register={register}
                   options={options}
                   value={options.find((c) => c.value === value)}
                   onChange={(val) => onChange(val.value)}
@@ -151,17 +150,13 @@ const Home = ({ auth, setAuth }) => {
               error={errors.text?.message}
               register={register}
             />
-            <span>Selecionar status</span>
             <Controller
               control={control}
-              defaultValue={
-                techEditing.status &&
-                options.find(({ value }) => value === techEditing.status).value
-              }
-              name="status"
-              render={({ field: { onChange, value, ref } }) => (
+              render={({ field: { onChange, value } }) => (
                 <SelectInput
-                  inputRef={ref}
+                  name="status"
+                  label="Selecionar status"
+                  register={register}
                   options={options}
                   value={options.find((c) => c.value === value)}
                   onChange={(val) => onChange(val.value)}

@@ -118,10 +118,17 @@ const Signup = ({ auth }) => {
             register={register}
           />
           <Controller
-            render={({ field }) => <SelectInput {...field} options={options} />}
             control={control}
-            name="course_module"
-            defaultValue={options[0].value}
+            render={({ field: { value, onChange } }) => (
+              <SelectInput
+                label="Selecionar módulo"
+                name="course_module"
+                register={register}
+                options={options}
+                value={options.find((c) => c.value === value)}
+                onChange={(val) => onChange(val.value)}
+              />
+            )}
           />
           <Input
             label="Contato"

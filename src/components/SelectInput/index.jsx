@@ -1,12 +1,21 @@
-import { Wrapper, Content } from "./styles";
+import { Label, Wrapper } from "./styles";
 
-const SelectInput = ({ options, ...rest }) => {
+const SelectInput = ({ options, label, register, name, ...rest }) => {
   return (
-    <Wrapper {...rest}>
-      {options.map((option) => (
-        <Content key={option.value} value={option.value} label={option.label} />
-      ))}
-    </Wrapper>
+    <>
+      <Label>{label}</Label>
+      <Wrapper>
+        <select {...register(name)} {...rest}>
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              label={option.label}
+            />
+          ))}
+        </select>
+      </Wrapper>
+    </>
   );
 };
 

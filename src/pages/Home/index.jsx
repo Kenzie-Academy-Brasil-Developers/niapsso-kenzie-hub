@@ -76,15 +76,25 @@ const Home = ({ auth, setAuth }) => {
   };
   const editTech = (data) => {
     setShowModalEdit(false);
-    console.log(data, techEditing);
     kenzieHubApi
       .put(`/users/techs/${techEditing.id}`, data, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        getTechs();
+      });
+  };
+  const deleteTech = () => {
+    setShowModalEdit(false);
+    kenzieHubApi
+      .delete(`/users/techs${techEditing.id}`, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      })
+      .then(() => {
         getTechs();
       });
   };
@@ -160,7 +170,9 @@ const Home = ({ auth, setAuth }) => {
             />
             <div className="btn--container">
               <Button type="submit">Salvar alterações</Button>
-              <Button bgColor="#868E96">Excluir</Button>
+              <Button bgColor="#868E96" onClick={deleteTech}>
+                Excluir
+              </Button>
             </div>
           </form>
         </div>

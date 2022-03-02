@@ -4,6 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: right;
+  max-width: 800px;
+  margin: 0 auto;
   .header--home {
     display: flex;
     justify-content: space-between;
@@ -37,6 +39,12 @@ export const Wrapper = styled.div`
       font-size: var(--title-2);
     }
   }
+  @media (min-width: 600px) {
+    .info--box {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 `;
 
 export const Content = styled.section`
@@ -56,9 +64,24 @@ export const Content = styled.section`
       border-radius: 4px;
       border: none;
       transition: 0.5s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       &:hover {
-        background-color: var(--grey-2);
+        color: var(--grey-4);
+        background: var(--grey-2);
+        box-shadow: inset 3px 3px 6px #2c3237, inset -3px -3px 6px #3c444b;
       }
+    }
+  }
+  @media (min-width: 600px) {
+    > div {
+      gap: 400px;
+    }
+  }
+  @media (min-width: 800px) {
+    > div {
+      gap: 630px;
     }
   }
 `;
@@ -75,6 +98,13 @@ export const TechsContainer = styled.ul`
   max-height: 418px;
   gap: 16px;
   overflow-y: scroll;
+  @media (min-width: 600px) {
+    width: 550px;
+  }
+  @media (min-width: 800px) {
+    width: 780px;
+    overflow: hidden;
+  }
 `;
 
 export const Tech = styled.li`
@@ -87,6 +117,7 @@ export const Tech = styled.li`
   min-height: 49px;
   width: 279px;
   padding: 0 12px;
+  cursor: pointer;
   :hover {
     background-color: var(--grey-2);
   }
@@ -96,6 +127,12 @@ export const Tech = styled.li`
   span {
     font-size: var(--title-2);
     color: var(--grey-1);
+  }
+  @media (min-width: 600px) {
+    width: 533px;
+  }
+  @media (min-width: 800px) {
+    width: 763px;
   }
 `;
 

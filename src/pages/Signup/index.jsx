@@ -57,6 +57,7 @@ const Signup = ({ auth }) => {
     control,
   } = useForm({ resolver: yupResolver(schema) });
   const handleSignup = async (data) => {
+    console.log(data);
     delete data.confirm_password;
     await kenzieHubApi
       .post("/users", data)
@@ -69,6 +70,7 @@ const Signup = ({ auth }) => {
   if (auth) {
     return <Redirect to="/" />;
   }
+  console.log(errors);
   return (
     <Wrapper>
       <div>
@@ -116,17 +118,10 @@ const Signup = ({ auth }) => {
             register={register}
           />
           <Controller
+            render={({ field }) => <SelectInput {...field} options={options} />}
             control={control}
-            defaultValue={options[0].value}
             name="course_module"
-            render={({ field: { onChange, value, ref } }) => (
-              <SelectInput
-                inputRef={ref}
-                options={options}
-                value={options.find((c) => c.value === value)}
-                onChange={(val) => onChange(val.value)}
-              />
-            )}
+            defaultValue={options[0].value}
           />
           <Input
             label="Contato"

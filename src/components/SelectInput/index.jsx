@@ -1,14 +1,13 @@
-import Select from "react-select";
+import { Wrapper, Content } from "./styles";
 
-const SelectInput = ({ ...rest }) => {
-  const customStyles = {
-    control: (base, state) => ({
-      ...base,
-      background: "#343B41",
-      borderColor: state.isFocused ? "#343B41" : "#F8F9FA",
-    }),
-  };
-  return <Select styles={customStyles} {...rest} />;
+const SelectInput = ({ options, ...rest }) => {
+  return (
+    <Wrapper {...rest}>
+      {options.map((option) => (
+        <Content key={option.value} value={option.value} label={option.label} />
+      ))}
+    </Wrapper>
+  );
 };
 
 export default SelectInput;

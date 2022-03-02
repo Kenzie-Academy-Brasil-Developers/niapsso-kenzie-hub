@@ -48,4 +48,12 @@ export const Content = styled.div`
     align-items: center;
     justify-content: space-between;
   }
+  @media (min-width: 800px) {
+    margin: 20% auto;
+    width: 50%;
+  }
+  @media (min-width: 1000px) {
+    margin: 15% auto;
+    width: 30%;
+  }
 `;

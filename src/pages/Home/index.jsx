@@ -5,14 +5,10 @@ import { useState, useEffect, useCallback } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import Modal from "../../components/Modal";
 import CloseButton from "../../components/CloseButton";
-import Input from "../../components/Input";
-import SelectInput from "../../components/SelectInput";
-import * as yup from "yup";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../../components/Button";
 import { kenzieHubApi } from "../../services/api";
 import { toast } from "react-toastify";
+import AddForm from "../../components/AddForm";
+import EditForm from "../../components/EditForm";
 
 const Home = ({ auth, setAuth }) => {
   const [userInfo] = useState(
@@ -22,20 +18,6 @@ const Home = ({ auth, setAuth }) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [techs, setTechs] = useState([]);
   const [techEditing, setTechEditing] = useState({});
-  const options = [
-    {
-      value: "Iniciante",
-      label: "Iniciante",
-    },
-    {
-      value: "Intermediário",
-      label: "Intermediário",
-    },
-    {
-      value: "Avançado",
-      label: "Avançado",
-    },
-  ];
   const getTechs = useCallback(() => {
     kenzieHubApi
       .get(`/users/${userInfo.id}`)
@@ -53,16 +35,6 @@ const Home = ({ auth, setAuth }) => {
     setAuth(false);
     history.push("/login");
   };
-  const schema = yup.object().shape({
-    title: yup.string().required("Campo obrigatório"),
-    status: yup.string().required("Campo obrigatório"),
-  });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({ resolver: yupResolver(schema) });
   const addTech = (data) => {
     setShowModalAdd(false);
     kenzieHubApi
@@ -89,7 +61,7 @@ const Home = ({ auth, setAuth }) => {
   const deleteTech = () => {
     setShowModalEdit(false);
     kenzieHubApi
-      .delete(`/users/techs${techEditing.id}`, {
+      .delete(`/users/techs/${techEditing.id}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
@@ -109,30 +81,7 @@ const Home = ({ auth, setAuth }) => {
           <CloseButton onClick={() => setShowModalAdd(false)} />
         </div>
         <div className="modal--body">
-          <form onSubmit={handleSubmit(addTech)}>
-            <Input
-              label="Nome"
-              placeholder="Nome da tecnologia"
-              name="title"
-              type="text"
-              error={errors.text?.message}
-              register={register}
-            />
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SelectInput
-                  name="status"
-                  label="Selecionar status"
-                  register={register}
-                  options={options}
-                  value={options.find((c) => c.value === value)}
-                  onChange={(val) => onChange(val.value)}
-                />
-              )}
-            />
-            <Button type="submit">Cadastrar Tecnologia</Button>
-          </form>
+          <AddForm addTech={addTech} />
         </div>
       </Modal>
       <Modal isOpen={showModalEdit} onClose={() => setShowModalEdit(false)}>
@@ -141,35 +90,11 @@ const Home = ({ auth, setAuth }) => {
           <CloseButton onClick={() => setShowModalEdit(false)} />
         </div>
         <div className="modal--body">
-          <form onSubmit={handleSubmit(editTech)}>
-            <Input
-              label="Nome do projeto"
-              placeholder={techEditing.title}
-              name="title"
-              type="text"
-              error={errors.text?.message}
-              register={register}
-            />
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SelectInput
-                  name="status"
-                  label="Selecionar status"
-                  register={register}
-                  options={options}
-                  value={options.find((c) => c.value === value)}
-                  onChange={(val) => onChange(val.value)}
-                />
-              )}
-            />
-            <div className="btn--container">
-              <Button type="submit">Salvar alterações</Button>
-              <Button bgColor="#868E96" onClick={deleteTech}>
-                Excluir
-              </Button>
-            </div>
-          </form>
+          <EditForm
+            techEditing={techEditing}
+            editTech={editTech}
+            deleteTech={deleteTech}
+          />
         </div>
       </Modal>
       <div className="header--home">

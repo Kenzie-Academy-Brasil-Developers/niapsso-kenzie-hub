@@ -12,7 +12,6 @@ const Routes = () => {
       return setAuth(true);
     }
   }, []);
-  console.log(auth);
   return (
     <Switch>
       <Route exact path="/">

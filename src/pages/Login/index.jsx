@@ -29,11 +29,11 @@ const Login = ({ auth, setAuth }) => {
     });
     const {
       token,
-      user: { name, course_module, techs },
+      user: { id, name, course_module, techs },
     } = response.data;
     localStorage.setItem(
       "@KenzieHub:token",
-      JSON.stringify({ token, name, course_module, techs })
+      JSON.stringify({ token, id, name, course_module, techs })
     );
     toast.success("Login feito com sucesso!");
     setAuth(true);
